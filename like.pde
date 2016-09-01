@@ -44,7 +44,7 @@ void draw() {
       drawOpenedStock();
     }
     this.exportPPM();
-    //launch python script
+    this.runPPM(diffusionTime);
   }
   surface.setTitle(int(frameRate) + " fps");
 }
@@ -153,10 +153,10 @@ private void writeImage(String fn, byte[] data, int width, int height)
   }
 }
 
-private void runPPM() {
+private void runPPM(int durationPPM) {
   Runtime rt = Runtime.getRuntime();
   try {
-    Process proc = rt.exec("sudo /home/pi/display16x32/rpi-rgb-led-matrix/led-matrix -r 16 -t 5 -D 1 /home/pi/display16x32/rpi-rgb-led-matrix/runtext16.ppm");
+    Process proc = rt.exec("sudo /home/pi/display16x32/rpi-rgb-led-matrix/led-matrix -r 16 -t "+durationPPM+" -D 1 /home/pi/display16x32/rpi-rgb-led-matrix/runtext16.ppm");
     proc.waitFor();
     BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
     String s = null;
