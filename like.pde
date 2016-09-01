@@ -60,7 +60,7 @@ private void drawClosedStock() {
     text(" = "+textValue+"€", 460, 12);
     text("A LA CLOTURE : ", 360, 12);
     image(like, 445, 0);
-    diffusionTime = 15000;
+    diffusionTime = 5;
   }
 }
 
@@ -85,12 +85,12 @@ private void drawOpenedStock() {
     String textValue = nf(this.valTab[this.valTab.length-1], 0, 3);
     text(" = "+textValue+"€", 20, 12);
     image(like, 5, 0);
-    diffusionTime = 15;
+    diffusionTime = 5;
   } 
   else {
     fill(255, 0, 0, 190);
     text("CHARGEMENT EN COURS ...", 5, 12);
-    diffusionTime = 15;
+    diffusionTime = 5;
   }
 }
 
