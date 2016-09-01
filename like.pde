@@ -16,7 +16,7 @@ PImage like;
 int diffusionTime; 
 
 void setup() {
-  size(530, 16, P2D);
+  size(530, 16);
   this.like = loadImage("facebook-like-icon.png");
   try {
     this.valTab = float(loadStrings("numbers.txt"));
@@ -134,7 +134,7 @@ private void exportPPM() {
     byteImg[3*i+2] = byte(this.pixels[i] & 0xFF);
   }
   try {
-    this.writeImage("testProcessing.ppm", byteImg, width, height);
+    this.writeImage("/home/pi/display16x32/rpi-rgb-led-matrix/testProcessing.ppm", byteImg, width, height);
   }
   catch(IOException e) {
     println(e);
@@ -156,7 +156,7 @@ private void writeImage(String fn, byte[] data, int width, int height)
 private void runPPM(int durationPPM) {
   Runtime rt = Runtime.getRuntime();
   try {
-    Process proc = rt.exec("sudo /home/pi/display16x32/rpi-rgb-led-matrix/led-matrix -r 16 -t "+durationPPM+" -D 1 /home/pi/display16x32/rpi-rgb-led-matrix/runtext16.ppm");
+    Process proc = rt.exec("sudo /home/pi/display16x32/rpi-rgb-led-matrix/led-matrix -r 16 -t "+durationPPM+" -D 1 /home/pi/display16x32/rpi-rgb-led-matrix/testProcessing.ppm");
     proc.waitFor();
     BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
     String s = null;
