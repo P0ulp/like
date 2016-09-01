@@ -153,22 +153,21 @@ private void writeImage(String fn, byte[] data, int width, int height)
   }
 }
 
-private void runPPM(){
-Runtime rt = Runtime.getRuntime();
-  try{
+private void runPPM() {
+  Runtime rt = Runtime.getRuntime();
+  try {
     Process proc = rt.exec("sudo /home/pi/display16x32/rpi-rgb-led-matrix/led-matrix -r 16 -t 5 -D 1 /home/pi/display16x32/rpi-rgb-led-matrix/runtext16.ppm");
     proc.waitFor();
     BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
     String s = null;
-    while((s=reader.readLine())!=null){
+    while ((s=reader.readLine())!=null) {
       println(s);
     }
-    
   }
-  catch(IOException e){
-   println(e); 
+  catch(IOException e) {
+    println(e);
   }
-  catch(InterruptedException e){
-   println(e); 
+  catch(InterruptedException e) {
+    println(e);
   }
 }
