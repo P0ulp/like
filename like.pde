@@ -5,19 +5,18 @@ import java.io.*;
 float valTab[];
 int updateTime;
 PFont font;
-PImage bills;
-color fbc = #0042d1;//#3B5998;
+PImage arrow;
+color fbc = #1f4eb2;//#3B5998;
 int dayOfWeek;
 int hourOfDay;
 Calendar c;
-int curvePosX = 100;
-int graphHeight = 15;
 PImage like;
 int diffusionTime; 
 
 void setup() {
   size(530, 16);
   this.like = loadImage("facebook-like-icon.png");
+  this.arrow = loadImage("arrow.png");
   try {
     this.valTab = float(loadStrings("numbers.txt"));
   }
@@ -35,14 +34,14 @@ void setup() {
 void draw() {
   this.dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
   this.hourOfDay = c.get(Calendar.HOUR_OF_DAY);
-  if (millis()-this.updateTime > diffusionTime) {
+  if (millis()-this.updateTime > diffusionTime*1000) {
     this.updateTime = millis();
-    if (this.dayOfWeek == 1 || this.dayOfWeek == 7 || this.hourOfDay < 8 || this.hourOfDay > 15) {
+    /*if (this.dayOfWeek == 1 || this.dayOfWeek == 7 || this.hourOfDay < 8 || this.hourOfDay > 15) {
       drawClosedStock();
     } 
-    else {
+    else {*/
       drawOpenedStock();
-    }
+    //}
     this.exportPPM();
     this.runPPM(diffusionTime);
   }
@@ -52,14 +51,14 @@ void draw() {
 private void drawClosedStock() {
   background(0);
   fill(255, 0, 0, 190);
-  text("LA BOURSE DE WALL STREET - NYC EST ACTUELLEMENT FERMEE", 5, 12);
+  text("LA BOURSE DE WALL STREET - NYC EST ACTUELLEMENT FERMEE", 30, 12);
   fill(fbc);
   diffusionTime = 10000;
   if (this.valTab.length > 0) {
     String textValue = nf(this.valTab[this.valTab.length-1], 0, 3);
-    text(" = "+textValue+"€", 460, 12);
-    text("A LA CLOTURE : ", 360, 12);
-    image(like, 445, 0);
+    text("A LA CLOTURE", 360, 12);
+    image(like, 440, 0);
+    text(" = "+textValue+"€", 455, 12);
     diffusionTime = 5;
   }
 }
@@ -68,23 +67,38 @@ private void drawOpenedStock() {
   background(0);
   boolean updated = this.update();
   if (this.valTab.length > 1 && updated) {
+    int curvePosX = 180;
+    int graphHeight = 15;
     beginShape();
     stroke(fbc);
     strokeWeight(1.5);
     noFill();
+    float moyValue = 0;
     float valMax = sort(this.valTab)[this.valTab.length-1];
     float valMin = sort(this.valTab)[0];
     curveVertex(curvePosX, map(this.valTab[0], valMin, valMax, graphHeight, 1));
     for (int i=0; i<this.valTab.length; i++) {
+      moyValue+=this.valTab[i];
       float valP = map(this.valTab[i], valMin, valMax, graphHeight, 1);
-      curveVertex(curvePosX+(i*((width-curvePosX)/(this.valTab.length-1.0))), valP);
+      curveVertex(curvePosX+(i*((270-curvePosX)/(this.valTab.length-1.0))), valP);
     }
-    curveVertex(width, map(this.valTab[this.valTab.length-1], valMin, valMax, graphHeight, 1));
+    moyValue = moyValue / this.valTab.length;
+    curveVertex(270, map(this.valTab[this.valTab.length-1], valMin, valMax, graphHeight, 1));
     endShape();
     fill(fbc);
+    int s = second();  
+    int m = minute();
+    int h = hour();
     String textValue = nf(this.valTab[this.valTab.length-1], 0, 3);
-    text(" = "+textValue+"€", 20, 12);
-    image(like, 5, 0);
+    text(nf(h,2)+":"+nf(m,2)+":"+nf(s,2), 30, 12);
+    image(like, 85, 0);
+    text(" = "+textValue+"€", 100, 12);
+    float valDiff = constrain(this.valTab[this.valTab.length-1] - this.valTab[this.valTab.length-2],-moyValue,moyValue);
+    valDiff = map(valDiff, moyValue, -moyValue,0,180);
+    translate(165, height/2);
+    rotate(radians(valDiff));
+    translate(-arrow.width/2, -arrow.height/2);
+    image(arrow,0,0);
     diffusionTime = 5;
   } 
   else {
@@ -92,6 +106,7 @@ private void drawOpenedStock() {
     text("CHARGEMENT EN COURS ...", 5, 12);
     diffusionTime = 5;
   }
+
 }
 
 private boolean update() {
