@@ -80,10 +80,10 @@ private void drawOpenedStock() {
     for (int i=0; i<this.valTab.length; i++) {
       moyValue+=this.valTab[i];
       float valP = map(this.valTab[i], valMin, valMax, graphHeight, 1);
-      curveVertex(curvePosX+(i*((270-curvePosX)/(this.valTab.length-1.0))), valP);
+      curveVertex(curvePosX+(i*((250-curvePosX)/(this.valTab.length-1.0))), valP);
     }
     moyValue = moyValue / this.valTab.length;
-    curveVertex(270, map(this.valTab[this.valTab.length-1], valMin, valMax, graphHeight, 1));
+    curveVertex(250, map(this.valTab[this.valTab.length-1], valMin, valMax, graphHeight, 1));
     endShape();
     fill(fbc);
     int s = second();  
@@ -92,19 +92,19 @@ private void drawOpenedStock() {
     String textValue = nf(this.valTab[this.valTab.length-1], 0, 3);
     text(nf(h,2)+":"+nf(m,2)+":"+nf(s,2), 30, 12);
     image(like, 85, 0);
-    text(" = "+textValue+"€", 100, 12);
+    text(" = "+textValue+" €", 98, 12);
     float valDiff = constrain(this.valTab[this.valTab.length-1] - this.valTab[this.valTab.length-2],-moyValue,moyValue);
     valDiff = map(valDiff, moyValue, -moyValue,0,180);
-    translate(165, height/2);
+    translate(163, height/2);
     rotate(radians(valDiff));
     translate(-arrow.width/2, -arrow.height/2);
     image(arrow,0,0);
-    diffusionTime = 5;
+    diffusionTime = 13;
   } 
   else {
     fill(255, 0, 0, 190);
     text("CHARGEMENT EN COURS ...", 5, 12);
-    diffusionTime = 5;
+    diffusionTime = 15;
   }
 
 }
@@ -171,7 +171,7 @@ private void writeImage(String fn, byte[] data, int width, int height)
 private void runPPM(int durationPPM) {
   Runtime rt = Runtime.getRuntime();
   try {
-    Process proc = rt.exec("sudo /home/pi/display16x32/rpi-rgb-led-matrix/led-matrix -r 16 -t "+durationPPM+" -D 1 /home/pi/display16x32/rpi-rgb-led-matrix/testProcessing.ppm");
+    Process proc = rt.exec("sudo /home/pi/display16x32/rpi-rgb-led-matrix/led-matrix -m 50 -r 16 -t "+durationPPM+" -D 1 /home/pi/display16x32/rpi-rgb-led-matrix/testProcessing.ppm");
     proc.waitFor();
     BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
     String s = null;
