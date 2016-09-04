@@ -91,7 +91,7 @@ private void drawOpenedStock() {
     int h = hour();
     String textValue = nf(this.valTab[this.valTab.length-1], 0, 3);
     text(nf(h,2)+":"+nf(m,2)+":"+nf(s,2), 30, 12);
-    image(like, 85, 0);
+    image(like, 85, 1);
     text(" = "+textValue+" €", 98, 12);
     float valDiff = constrain(this.valTab[this.valTab.length-1] - this.valTab[this.valTab.length-2],-moyValue,moyValue);
     valDiff = map(valDiff, moyValue, -moyValue,0,180);
