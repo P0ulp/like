@@ -15,7 +15,7 @@ int diffusionTime;
 
 void setup() {
   size(530, 16);
-  this.like = loadImage("facebook-like-icon.png");
+  this.like = loadImage("./data/facebook-like-icon.png");
   this.arrow = loadImage("arrow.png");
   try {
     this.valTab = float(loadStrings("numbers.txt"));
