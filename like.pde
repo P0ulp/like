@@ -6,7 +6,7 @@ float valTab[];
 int updateTime;
 PFont font;
 PImage arrow;
-color fbc = #3B5998;//#0042d1;//#1f4eb2;//#3B5998;
+color fbc = #3B5998;
 int dayOfWeek;
 int hourOfDay;
 Calendar c;
