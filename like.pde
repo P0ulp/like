@@ -26,12 +26,12 @@ void setup() {
   }
   this.updateTime = millis();
   this.font = loadFont("SansSerif-10.vlw");
-  this.c = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
   this.textFont(this.font);
   textAlign(LEFT);
 }
 
 void draw() {
+  this.c = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
   this.dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
   this.hourOfDay = c.get(Calendar.HOUR_OF_DAY);
   if (millis()-this.updateTime > diffusionTime*1000) {
