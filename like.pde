@@ -54,7 +54,7 @@ private void drawClosedStock() {
   fill(255, 0, 0, 190);
   text("LA BOURSE DE WALL STREET - NYC EST FERMEE", 32, 12);
   fill(fbc);
-  diffusionTime = 10000;
+  diffusionTime = 15;
   if (this.valTab.length > 0) {
     String textValue = nf(this.valTab[this.valTab.length-1], 0, 3);
     text("A LA CLOTURE", 300, 12);
