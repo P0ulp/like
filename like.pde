@@ -36,7 +36,7 @@ void draw() {
   this.hourOfDay = c.get(Calendar.HOUR_OF_DAY);
   if (millis()-this.updateTime > diffusionTime*1000) {
     this.updateTime = millis();
-    if (this.dayOfWeek == 1 || this.dayOfWeek == 7 || this.hourOfDay < 8 || this.hourOfDay > 15) {
+    if (this.dayOfWeek == 1 || this.dayOfWeek == 7 || this.hourOfDay < 9 || this.hourOfDay > 16) {
       drawClosedStock();
     } 
     else {
