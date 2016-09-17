@@ -54,7 +54,7 @@ public void draw() {
   int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
   if (millis()-this.updateTime > diffusionTime*1000) {
     this.updateTime = millis();
-    if (dayOfWeek != 1 || dayOfWeek != 7 || timeDay >= 570 && timeDay <= 960) {
+    if (dayOfWeek != 1 && dayOfWeek != 7 && timeDay >= 570 && timeDay <= 960) {
       drawOpenedStock();
     } 
     else {
