@@ -27,8 +27,6 @@ int updateTime;
 PFont font;
 PImage arrow;
 int fbc = 0xff3B5998;
-int dayOfWeek;
-int hourOfDay;
 Calendar c;
 PImage like;
 int diffusionTime; 
@@ -46,26 +44,25 @@ public void setup() {
   }
   this.updateTime = millis();
   this.font = loadFont("SansSerif-10.vlw");
-  this.c = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
   this.textFont(this.font);
   textAlign(LEFT);
 }
 
 public void draw() {
-  this.dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-  this.hourOfDay = c.get(Calendar.HOUR_OF_DAY);
+  this.c = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
+  int timeDay = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);  //9H30/570 - ouverture :: 16h00/960 - fermeture
+  int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
   if (millis()-this.updateTime > diffusionTime*1000) {
     this.updateTime = millis();
-    if (this.dayOfWeek == 1 || this.dayOfWeek == 7 || this.hourOfDay < 8 || this.hourOfDay > 15) {
-      drawClosedStock();
+    if (/*dayOfWeek != 1 || dayOfWeek != 7 || */ timeDay >= 638 && timeDay <= 960) {
+      drawOpenedStock();
     } 
     else {
-      drawOpenedStock();
+      drawClosedStock();
     }
     this.exportPPM();
     this.runPPM(diffusionTime);
   }
-  image(like,0,0);
   surface.setTitle(PApplet.parseInt(frameRate) + " fps");
 }
 
@@ -74,7 +71,7 @@ private void drawClosedStock() {
   fill(255, 0, 0, 190);
   text("LA BOURSE DE WALL STREET - NYC EST FERMEE", 32, 12);
   fill(fbc);
-  diffusionTime = 10000;
+  diffusionTime = 15;
   if (this.valTab.length > 0) {
     String textValue = nf(this.valTab[this.valTab.length-1], 0, 3);
     text("A LA CLOTURE", 300, 12);
@@ -155,7 +152,7 @@ private boolean update() {
         this.valTab = reverse(this.valTab);
       }
       this.valTab = append(this.valTab, val);
-      saveStrings("numbers.txt", str(this.valTab));
+      saveStrings("data/numbers.txt", str(this.valTab));
     }
   }
   return updated;
@@ -190,6 +187,7 @@ private void writeImage(String fn, byte[] data, int width, int height)
 }
 
 private void runPPM(int durationPPM) {
+  durationPPM = durationPPM -1;
   Runtime rt = Runtime.getRuntime();
   try {
     Process proc = rt.exec("sudo /home/pi/display16x32/rpi-rgb-led-matrix/led-matrix -m 50 -r 16 -t "+durationPPM+" -D 1 /home/pi/display16x32/rpi-rgb-led-matrix/testProcessing.ppm");
