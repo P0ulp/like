@@ -170,6 +170,7 @@ private void writeImage(String fn, byte[] data, int width, int height)
 }
 
 private void runPPM(int durationPPM) {
+  durationPPM = durationPPM -1;
   Runtime rt = Runtime.getRuntime();
   try {
     Process proc = rt.exec("sudo /home/pi/display16x32/rpi-rgb-led-matrix/led-matrix -m 50 -r 16 -t "+durationPPM+" -D 1 /home/pi/display16x32/rpi-rgb-led-matrix/testProcessing.ppm");
