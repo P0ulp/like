@@ -7,8 +7,6 @@ int updateTime;
 PFont font;
 PImage arrow;
 color fbc = #3B5998;
-int dayOfWeek;
-int hourOfDay;
 Calendar c;
 PImage like;
 int diffusionTime; 
@@ -32,15 +30,15 @@ void setup() {
 
 void draw() {
   this.c = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));
-  this.dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-  this.hourOfDay = c.get(Calendar.HOUR_OF_DAY);
+  int timeDay = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);  //9H30/570 - ouverture :: 16h00/960 - fermeture
+  int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
   if (millis()-this.updateTime > diffusionTime*1000) {
     this.updateTime = millis();
-    if (this.dayOfWeek == 1 || this.dayOfWeek == 7 || this.hourOfDay < 9 || this.hourOfDay > 16) {
-      drawClosedStock();
+    if (/*dayOfWeek != 1 || dayOfWeek != 7 || */ timeDay >= 570 && timeDay <= 960) {
+      drawOpenedStock();
     } 
     else {
-      drawOpenedStock();
+      drawClosedStock();
     }
     this.exportPPM();
     this.runPPM(diffusionTime);
