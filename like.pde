@@ -34,7 +34,7 @@ void draw() {
   int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
   if (millis()-this.updateTime > diffusionTime*1000) {
     this.updateTime = millis();
-    if (/*dayOfWeek != 1 || dayOfWeek != 7 || */ timeDay >= 570 && timeDay <= 960) {
+    if (/*dayOfWeek != 1 || dayOfWeek != 7 || */ timeDay >= 625 && timeDay <= 960) {
       drawOpenedStock();
     } 
     else {
@@ -43,7 +43,6 @@ void draw() {
     this.exportPPM();
     this.runPPM(diffusionTime);
   }
-  image(like,0,0);
   surface.setTitle(int(frameRate) + " fps");
 }
 
@@ -133,7 +132,7 @@ private boolean update() {
         this.valTab = reverse(this.valTab);
       }
       this.valTab = append(this.valTab, val);
-      saveStrings("numbers.txt", str(this.valTab));
+      saveStrings("data/numbers.txt", str(this.valTab));
     }
   }
   return updated;
