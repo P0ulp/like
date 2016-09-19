@@ -92,9 +92,9 @@ private void drawOpenedStock() {
     image(like, 85, 1);
     text(" = "+textValue+" €", 98, 12);
     float valDiff = constrain(this.valTab[this.valTab.length-1] - this.valTab[this.valTab.length-2],-moyValue,moyValue);
-    valDiff = map(valDiff, moyValue, -moyValue,0,180);
+    valDiff = map(valDiff, moyValue/1000, -moyValue/1000,0,180);
     translate(163, height/2);
-    rotate(radians(valDiff));
+    rotate(radians(constrain(valDiff,0,180)));
     translate(-arrow.width/2, -arrow.height/2);
     image(arrow,0,0);
     diffusionTime = 13;
