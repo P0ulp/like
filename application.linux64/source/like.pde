@@ -65,7 +65,8 @@ private void drawOpenedStock() {
   background(0);
   boolean updated = this.update();
   if (this.valTab.length > 1 && updated) {
-    int curvePosX = 180;
+    String textValue = nf(this.valTab[this.valTab.length-1], 0, 3);
+    int curvePosX = int(130+textValue.length()*5.5+20);//180;
     int graphHeight = 15;
     beginShape();
     stroke(fbc);
@@ -78,22 +79,21 @@ private void drawOpenedStock() {
     for (int i=0; i<this.valTab.length; i++) {
       moyValue+=this.valTab[i];
       float valP = map(this.valTab[i], valMin, valMax, graphHeight, 1);
-      curveVertex(curvePosX+(i*((250-curvePosX)/(this.valTab.length-1.0))), valP);
+      curveVertex(curvePosX+(i*((300-curvePosX)/(this.valTab.length-1.0))), valP);
     }
     moyValue = moyValue / this.valTab.length;
-    curveVertex(250, map(this.valTab[this.valTab.length-1], valMin, valMax, graphHeight, 1));
+    curveVertex(300, map(this.valTab[this.valTab.length-1], valMin, valMax, graphHeight, 1));
     endShape();
     fill(fbc);
     int s = second();  
     int m = minute();
     int h = hour();
-    String textValue = nf(this.valTab[this.valTab.length-1], 0, 3);
     text(nf(h,2)+":"+nf(m,2)+":"+nf(s,2), 30, 12);
     image(like, 85, 1);
     text(" = "+textValue+" €", 98, 12);
     float valDiff = constrain(this.valTab[this.valTab.length-1] - this.valTab[this.valTab.length-2],-moyValue,moyValue);
     valDiff = map(valDiff, moyValue/1000, -moyValue/1000,0,180);
-    translate(163, height/2);
+    translate(130+textValue.length()*5.5, height/2);
     rotate(radians(constrain(valDiff,0,180)));
     translate(-arrow.width/2, -arrow.height/2);
     image(arrow,0,0);
