@@ -65,8 +65,8 @@ private void drawOpenedStock() {
   background(0);
   boolean updated = this.update();
   if (this.valTab.length > 1 && updated) {
-    String textValue = nf(this.valTab[this.valTab.length-1], 0, 3);
-    int curvePosX = int(130+textValue.length()*5.5+20);//180;
+    String textValue = nf(this.valTab[this.valTab.length-1], 0, 2);
+    int curvePosX = int(130+textValue.length()*5.5+10);//180;
     int graphHeight = 15;
     beginShape();
     stroke(fbc);
@@ -79,10 +79,10 @@ private void drawOpenedStock() {
     for (int i=0; i<this.valTab.length; i++) {
       moyValue+=this.valTab[i];
       float valP = map(this.valTab[i], valMin, valMax, graphHeight, 1);
-      curveVertex(curvePosX+(i*((300-curvePosX)/(this.valTab.length-1.0))), valP);
+      curveVertex(curvePosX+(i*((250-curvePosX)/(this.valTab.length-1.0))), valP);
     }
     moyValue = moyValue / this.valTab.length;
-    curveVertex(300, map(this.valTab[this.valTab.length-1], valMin, valMax, graphHeight, 1));
+    curveVertex(250, map(this.valTab[this.valTab.length-1], valMin, valMax, graphHeight, 1));
     endShape();
     fill(fbc);
     int s = second();  
