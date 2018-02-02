@@ -147,7 +147,7 @@ private void exportPPM() {
     byteImg[3*i+2] = byte(this.pixels[i] & 0xFF);
   }
   try {
-    this.writeImage("/home/pi/display16x32/rpi-rgb-led-matrix/testProcessing.ppm", byteImg, width, height);
+    this.writeImage("/home/pi/rpi-rgb-led-matrix/examples-api-use/demo/processing.ppm", byteImg, width, height);
   }
   catch(IOException e) {
     println(e);
@@ -169,7 +169,7 @@ private void writeImage(String fn, byte[] data, int width, int height)
 private void runPPM(int durationPPM) {
   Runtime rt = Runtime.getRuntime();
   try {
-    Process proc = rt.exec("sudo /home/pi/display16x32/rpi-rgb-led-matrix/led-matrix -m 50 -r 16 -t "+durationPPM+" -D 1 /home/pi/display16x32/rpi-rgb-led-matrix/testProcessing.ppm");
+    Process proc = rt.exec("sudo /home/pi/rpi-rgb-led-matrix/examples-api-use/demo -m 50 -r 16 -t "+durationPPM+" -D 1 /home/pi/rpi-rgb-led-matrix/examples-api-use/demo/processing.ppm");
     proc.waitFor();
     BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
     String s = null;
